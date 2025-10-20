@@ -1,6 +1,7 @@
 package gov.peru.escuela.conducir.persistencia;
 
 import gov.peru.escuela.conducir.bean.Escuela;
+import gov.peru.escuela.conducir.exception.EscuelaException;
 import gov.peru.escuela.conducir.util.DbConnection;
 
 import java.sql.*;
