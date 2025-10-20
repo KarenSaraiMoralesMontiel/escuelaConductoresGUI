@@ -66,8 +66,8 @@ public class Main extends Application {
         HBox buttonBox = new HBox(15);
         buttonBox.setAlignment(Pos.CENTER);
 
-        Button btnAdd = createButton("Nuevo Establecimiento", "#28a745");
-        Button btnRefresh = createButton("Actualizar", "#17a2b8");
+        Button btnAdd = createButton("Nueva Escuela", "#28a745");
+        Button btnRefresh = createButton("Actualizar Datos", "#17a2b8");
 
         btnAdd.setOnAction(e -> showAddForm());
         btnRefresh.setOnAction(e -> refreshData());
@@ -87,39 +87,49 @@ public class Main extends Application {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id_establecimiento"));
         idCol.setPrefWidth(60);
 
-        TableColumn<Escuela, String> rucCol = new TableColumn<>("RUC");
+        TableColumn rucCol = new TableColumn<>("RUC");
         rucCol.setCellValueFactory(new PropertyValueFactory<>("no_ruc"));
         rucCol.setPrefWidth(120);
 
-        TableColumn<Escuela, String> nombreCol = new TableColumn<>("Nombre Centro");
+        TableColumn nombreCol = new TableColumn<>("Nombre Centro");
         nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre_centro"));
         nombreCol.setPrefWidth(200);
 
-        TableColumn<Escuela, String> direccionCol = new TableColumn<>("Dirección");
+        TableColumn direccionCol = new TableColumn<>("Dirección");
         direccionCol.setCellValueFactory(new PropertyValueFactory<>("direccion_centro"));
         direccionCol.setPrefWidth(250);
 
-        TableColumn<Escuela, String> departamentoCol = new TableColumn<>("Departamento");
+        TableColumn escuelaDatos = new TableColumn("Datos de escuela");
+        escuelaDatos.getColumns().addAll(rucCol,nombreCol,direccionCol);
+
+        TableColumn departamentoCol = new TableColumn<>("Departamento");
         departamentoCol.setCellValueFactory(new PropertyValueFactory<>("departamento"));
         departamentoCol.setPrefWidth(120);
 
-        TableColumn<Escuela, String> provinciaCol = new TableColumn<>("Provincia");
+        TableColumn provinciaCol = new TableColumn<>("Provincia");
         provinciaCol.setCellValueFactory(new PropertyValueFactory<>("provincia"));
         provinciaCol.setPrefWidth(120);
 
-        TableColumn<Escuela, String> distritoCol = new TableColumn<>("Distrito");
+        TableColumn distritoCol = new TableColumn<>("Distrito");
         distritoCol.setCellValueFactory(new PropertyValueFactory<>("distrito"));
         distritoCol.setPrefWidth(120);
 
-        TableColumn<Escuela, String> emailCol = new TableColumn<>("Email");
+        TableColumn ubigeoCol = new TableColumn("Ubigeo");
+        ubigeoCol.getColumns().addAll(departamentoCol, provinciaCol, distritoCol);
+
+
+        TableColumn emailCol = new TableColumn<>("Email");
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         emailCol.setPrefWidth(150);
 
-        TableColumn<Escuela, String> phoneCol = new TableColumn<>("Teléfono");
+        TableColumn phoneCol = new TableColumn<>("Teléfono");
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         phoneCol.setPrefWidth(120);
 
-        TableColumn<Escuela, Boolean> estadoCol = new TableColumn<>("Estado");
+        TableColumn contactoCol = new TableColumn("Contacto");
+        contactoCol.getColumns().addAll(emailCol, phoneCol);
+
+        TableColumn estadoCol = new TableColumn("Estado");
         estadoCol.setCellValueFactory(new PropertyValueFactory<>("estado_autorizacion"));
         estadoCol.setPrefWidth(80);
         estadoCol.setCellFactory(col -> new TableCell<Escuela, Boolean>() {
@@ -135,8 +145,7 @@ public class Main extends Application {
             }
         });
 
-        table.getColumns().addAll(idCol, rucCol, nombreCol, direccionCol, departamentoCol,
-                provinciaCol, distritoCol, emailCol, phoneCol, estadoCol);
+        table.getColumns().addAll(idCol, ubigeoCol,escuelaDatos,contactoCol, estadoCol);
 
         table.setItems(escuelaData);
         return table;
@@ -146,9 +155,10 @@ public class Main extends Application {
         Button button = new Button(text);
         button.setPrefSize(180, 40);
         button.setStyle(String.format(
+
                 "-fx-background-color: %s; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5;",
                 color
-        ));
+                ));
         return button;
     }
 
