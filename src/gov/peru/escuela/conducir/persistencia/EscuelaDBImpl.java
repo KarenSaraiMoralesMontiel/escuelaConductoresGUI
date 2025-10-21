@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EscuelaDBImpl implements EscuelaDB {
     private final String DB_INSERT = "INSERT INTO peru_driver_escuelas (no_ruc, nombre_centro, direccion_centro, email, phone, estado_autorizacion, id_distrito) VALUES (?,?,?,?,?,?,?) ";
-        private final String DB_SELECT_ALL = "{ ? = call get_driver_schools() }";
+        private final String DB_SELECT_ALL = "{ ? = call get_data_by_table_type(?) }";
     @Override
     public List<Escuela> findAll(){
         DbConnection db = new DbConnection();
@@ -25,6 +25,7 @@ public class EscuelaDBImpl implements EscuelaDB {
             //Call
             CallableStatement cs = cn.prepareCall(DB_SELECT_ALL);
             cs.registerOutParameter(1, Types.OTHER);
+            cs.setString(2, "escuelas");
             cs.execute();
 
             ResultSet rs = (ResultSet) cs.getObject(1);
